@@ -1,74 +1,89 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var webpack = require('webpack')
-var path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require('webpack')
+const path = require('path')
 
-var isProd = process.env.NODE_ENV === 'production' // true or false
-var cssDev = ['style-loader', 'css-loader', 'sass-loader']
-var cssProd = ExtractTextPlugin.extract({
-  fallback: 'style-loader',
-  use: ['css-loader', 'sass-loader'],
-  publicPath: '/dist'
-})
-var cssConfig = isProd ? cssProd : cssDev
+// const isProd = process.env.NODE_ENV === 'production' // true or false
+// const cssDev = ['style-loader', 'css-loader', 'sass-loader']
+// const cssProd = ExtractTextPlugin.extract({
+//   fallback: 'style-loader',
+//   use: ['css-loader', 'sass-loader'],
+//   publicPath: '/dist'
+// })
+// var cssConfig = isProd ? cssProd : cssDev
 
 module.exports = {
-  entry: {
-    app: './src/app.js'
-  },
+  entry: path.resolve(__dirname, "src/js/main.js"),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
-  },
-  module: {
-    rules: [
-      // {
-      //   enforce: 'pre',
-      //   test: /\.js$/,
-      //   use: 'eslint-loader',
-      //   exclude: /node_modules/
-      // },
-      {
-        test: /\.scss$/,
-        use: cssConfig
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      },
-      {
-          test: /\.(jpe?g|png|gif|svg)$/i,
-          use: [
-              'file-loader?name=[name].[ext]&outputPath=images/&publicPath=images/',
-              'image-webpack-loader'
-          ]
-      },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
-      }
-    ]
+    publicPath: "/",
+    filename: "bundle.js",
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, 'src'),
     compress: true,
     hot: true,
     open: true,
     port: 8080
   },
+  resolve: {
+		extensions: [".js", ".jsx"],
+	},
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Project Demo',
-      hash: true,
-      template: './src/index.html'
-    }),
-    new ExtractTextPlugin({
-      filename: 'app.css',
-      disable: !isProd,
-      allChunks: true
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
-  ]
+		new CopyWebpackPlugin([
+			{
+				context: path.resolve(__dirname, "src/"),
+				from: "index.html",
+				to: path.resolve(__dirname, "dist"),
+			},
+		]),
+		new webpack.DefinePlugin({
+			PRODUCTION: process.env.NODE_ENV === "production"
+		}),
+    // new HtmlWebpackPlugin({
+    //   title: 'Project Demo',
+    //   hash: true,
+    //   template: './src/index.html'
+    // }),
+    // new ExtractTextPlugin({
+    //   filename: 'app.css',
+    //   disable: !isProd,
+    //   allChunks: true
+    // }),
+    // new webpack.HotModuleReplacementPlugin(),
+    // new webpack.NamedModulesPlugin()
+	],
+  module: {
+    rules: [
+      {
+        test: /\.js$|.jsx$/,
+        exclude: /(node_modules|bower_components)/,
+        use: ["babel-loader"],
+      },
+      // {
+      //   test: /\.scss$/,
+      //   use: cssConfig
+      // },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
+      },
+      {
+        test: /\.(png|jp(e*)g|JPG|svg)$/,
+        // use: [{
+        //   loader: "url-loader",
+        //   options: {
+        //     limit: 8000,
+        //     name: "images/[hash]-[name].[ext]"
+        //   }
+        // }]
+        use: [
+            'file-loader?name=[name].[ext]&outputPath=images/&publicPath=images/',
+            'image-webpack-loader'
+        ]
+      },
+
+    ],
+  },
 }

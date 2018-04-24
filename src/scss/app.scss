@@ -9,8 +9,9 @@
 //Bootstrap
 
 // And this
-@import './styles/bootstrap';
+@import './bootstrap/bootstrap';
+@import '../../node_modules/aos/dist/aos.css';
 
 body {
-    background-image: url('./images/header-bg.png');
+    background-image: url('../images/header-bg.png');
 }
