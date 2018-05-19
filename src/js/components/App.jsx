@@ -1,6 +1,8 @@
 import React from "react";
 import headerbg from '../../images/header-bg.png';
 import AOS from 'aos';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faCoffee from '@fortawesome/fontawesome-free-solid/faCoffee';
 
 class App extends React.Component {
 	constructor(props){
@@ -20,7 +22,7 @@ class App extends React.Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-sm-10 m-auto">
-							<h1 className='page-header text-white'>Hello App <i className="fa fa-pencil-alt"></i></h1>
+							<h1 className='page-header text-white'>Hello App <FontAwesomeIcon icon={faCoffee} /></h1>
 							<div className="row">
 								<div className="col-sm-10 m-auto">
 									<img src={headerbg} alt="" className='img-fluid' data-aos='fade'/>
