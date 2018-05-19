@@ -1,5 +1,5 @@
 {
-    "name": "community",
+    "name": "boilerplate-react-ui",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/robmoya/community-demo.git"
+        "url": "git+https://github.com/robmoya/boilerplate-react-ui.git"
     },
     "keywords": [
         "react",
@@ -24,9 +24,9 @@
     "author": "robmoya",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/robmoya/community-demo/issues"
+        "url": "https://github.com/robmoya/boilerplate-react-ui/issues"
     },
-    "homepage": "https://github.com/robmoya/community-demo#readme",
+    "homepage": "https://github.com/robmoya/boilerplate-react-ui/#readme",
     "dependencies": {
         "aos": "^2.2.0",
         "bootstrap": "^4.0.0",
